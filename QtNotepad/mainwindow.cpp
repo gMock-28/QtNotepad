@@ -20,7 +20,7 @@ QMainWindow(),ui(new Ui::MainWindow) {
     //Тут действия
     fileMenu->addAction(openAction);
     fileMenu->addAction(saveAction);
-    fileMenu->addSeparator(); //вот эта полосочка графического характера
+    fileMenu->addSeparator();
     fileMenu->addAction(exitAction);
 
     textEdit = new QTextEdit();
