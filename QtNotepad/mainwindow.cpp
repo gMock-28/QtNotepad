@@ -5,31 +5,37 @@ MainWindow::MainWindow(QApplication *parent):
 
 QMainWindow(),ui(new Ui::MainWindow) {
     ui->setupUi(this);
-    //После этой строчки - наши действия!
-    openAction = new QAction(tr("&Открыть"), this);
-    connect(openAction, SIGNAL(triggered()), this, SLOT(open()));
-    saveAction = new QAction(tr("&Сохранить"), this);
-    connect(saveAction, SIGNAL(triggered()), this, SLOT(save()));
-    exitAction = new QAction(tr("&Выход"), this);
-    connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
-    fileMenu = this->menuBar()->addMenu(tr("&Файл"));
+
+    openAction = new QAction(tr("&Открыть"), this); //Открыть
+    connect(openAction, SIGNAL(triggered()), this, SLOT(open())); //Соединяем слот
+
+    saveAction = new QAction(tr("&Сохранить"), this); //Сохранить
+    connect(saveAction, SIGNAL(triggered()), this, SLOT(save())); //Соединяем слот
+
+    exitAction = new QAction(tr("&Выход"), this); //Выйти
+    connect(exitAction, SIGNAL(triggered()), this, SLOT(close())); //Соединяем слот
+
+    fileMenu = this->menuBar()->addMenu(tr("&Файл")); //пункт меню
+
+    //Тут действия
     fileMenu->addAction(openAction);
     fileMenu->addAction(saveAction);
-    fileMenu->addSeparator();
+    fileMenu->addSeparator(); //вот эта полосочка графического характера
     fileMenu->addAction(exitAction);
+
     textEdit = new QTextEdit();
     setCentralWidget(textEdit);
-    setWindowTitle(tr("Блокнот"));
+    setWindowTitle(tr("Блокнот D and M"));
 }
 
 MainWindow::~MainWindow() { delete ui; }
 
-//Ниже - наши методы класса
 void MainWindow::open() {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Открыть файл"), "", tr("Текстовые файлы (*.txt);;Файлы C++ (*.cpp *.h)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Открыть файл"), "", tr("Текстовые файлы (*.txt);"));
     if (fileName != "") {
         QFile file(fileName);
 
+        //а тут у проверка на readmode
         if (!file.open(QIODevice::ReadOnly)) {
             QMessageBox::critical(this, tr("Ошибка"), tr("Не могу открыть файл"));
             return;
@@ -42,11 +48,12 @@ void MainWindow::open() {
 }
 
 void MainWindow::save() {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Сохранить файл"), "", tr("Текстовые файлы (*.txt);;Файлы C++ (*.cpp *.h)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Сохранить файл"), "", tr("Текстовые файлы (*.txt);"));
 
     if (fileName != "") {
         QFile file(fileName);
 
+        //так же само, но на write
         if (!file.open(QIODevice::WriteOnly)) {
             QMessageBox msgBox; msgBox.setText("Не могу записать файл"); msgBox.exec();
         } else {

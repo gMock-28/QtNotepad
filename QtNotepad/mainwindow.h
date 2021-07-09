@@ -6,7 +6,7 @@
 namespace Ui { class MainWindow; }
 
 class MainWindow : public QMainWindow {
- Q_OBJECT
+    Q_OBJECT
 
 public:
      explicit MainWindow(QApplication *parent = 0);
@@ -19,6 +19,6 @@ private:
      QTextEdit *textEdit; //указатель на поле ввода текста
      QAction *openAction; //указатели на действия "Открыть",
      QAction *saveAction; //"Сохранить"
-     QAction *exitAction; //и "Выйти"
+     QAction *exitAction; //"Выйти"
      QMenu *fileMenu; //Указатель на меню
 };
